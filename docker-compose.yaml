@@ -1,0 +1,39 @@
+networks:
+  backend-network:
+    driver: bridge
+
+services:
+  ciabatta-core:
+    image: ciabatta-core:master
+    container_name: ciabatta-core-master-container
+    ports:
+      - "${CIABATTA_CORE_PORT}:${CIABATTA_CORE_PORT}"
+    # Spring 프로젝트는 실행 시점(Runtime)에 환경변수가 로드되며,
+    # 빌드 된 파일(jar)에 포함되지 않기 때문에 한번 더 환경 변수가 주입되어야 함
+    # docker-compose.yaml 파일은 .env 파일을 자동으로 로드함; export 따로 필요 하지 않음
+    environment:
+      - BREADKUN_DB_URL=${BREADKUN_DB_URL}
+      - BREADKUN_DB_USERNAME=${BREADKUN_DB_USERNAME}
+      - BREADKUN_DB_PASSWORD=${BREADKUN_DB_PASSWORD}
+    networks:
+      - backend-network
+    restart: always
+
+  nginx:
+    image: nginx:latest
+    container_name: nginx-container
+    ports:
+      - "80:80"
+      - "443:443"
+    # 로컬 호스트 파일을 컨테이너 내부에서 접근 하도록 마운트
+    volumes:
+      - /etc/letsencrypt:/etc/letsencrypt:ro  # SSL 인증서 디렉토리 마운트 (읽기 전용)
+    environment:
+      - NGINX_SERVER_NAME=${NGINX_SERVER_NAME}
+      - CORS_ORIGIN_1=${CORS_ORIGIN_1}
+      - CORS_ORIGIN_2=${CORS_ORIGIN_2}
+      - CORS_ORIGIN_3=${CORS_ORIGIN_3}
+      - CIABATTA_CORE_PORT=${CIABATTA_CORE_PORT}
+    networks:
+      - backend-network
+    restart: always

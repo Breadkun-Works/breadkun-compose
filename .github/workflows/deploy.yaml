@@ -1,0 +1,46 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout the repository code
+        uses: actions/checkout@v4
+
+      - name: Clean up and Create .env file, then upload to server
+        run: |
+          # 기존 .env 파일 삭제
+          ssh -p ${{ secrets.MASTER_SSH_PORT }} ${{ secrets.MASTER_SSH_USERNAME }}@${{ secrets.MASTER_SSH_HOST }} "rm -f /home/${{ secrets.MASTER_SSH_USERNAME }}/deploy/.env"
+          # 새로운 .env 파일 생성
+          echo "BREADKUN_DB_URL=${{ secrets.BREADKUN_DB_URL }}" > .env
+          echo "BREADKUN_DB_USERNAME=${{ secrets.BREADKUN_DB_USERNAME }}" >> .env
+          echo "BREADKUN_DB_PASSWORD=${{ secrets.BREADKUN_DB_PASSWORD }}" >> .env
+          echo "CIABATTA_CORE_PORT=${{ secrets.CIABATTA_CORE_PORT }}" >> .env
+          echo "NGINX_SERVER_NAME=${{ secrets.NGINX_SERVER_NAME }}" >> .env
+          echo "CORS_ORIGIN_1=${{ secrets.CORS_ORIGIN_1 }}" >> .env
+          echo "CORS_ORIGIN_2=${{ secrets.CORS_ORIGIN_2 }}" >> .env
+          echo "CORS_ORIGIN_3=${{ secrets.CORS_ORIGIN_3 }}" >> .env
+          # .env 파일 업로드
+          scp -P ${{ secrets.MASTER_SSH_PORT }} .env ${{ secrets.MASTER_SSH_USERNAME }}@${{ secrets.MASTER_SSH_HOST }}:/home/${{ secrets.MASTER_SSH_USERNAME }}/deploy/.env
+
+      - name: Clean up, Deploy docker-compose.yaml to server
+        uses: easingthemes/ssh-deploy@v5.1.0
+        with:
+          SSH_PRIVATE_KEY: ${{ secrets.MASTER_SSH_PRIVATE_KEY }}
+          REMOTE_HOST: ${{ secrets.MASTER_SSH_HOST }}
+          REMOTE_USER: ${{ secrets.MASTER_SSH_USERNAME }}
+          REMOTE_PORT: ${{ secrets.MASTER_SSH_PORT }}
+          SOURCE: docker-compose.yaml
+          TARGET: /home/${{ secrets.MASTER_SSH_USERNAME }}/deploy/
+          SCRIPT_BEFORE: |
+            rm -f /home/${{ secrets.MASTER_SSH_USERNAME }}/deploy/docker-compose.yaml
+          SCRIPT_AFTER: |
+            cd /home/${{ secrets.MASTER_SSH_USERNAME }}/deploy
+            docker compose down || true
+            docker compose up -d
