@@ -44,7 +44,7 @@ jobs:
           REMOTE_USER: ${{ secrets.MASTER_SSH_USERNAME }}
           REMOTE_PORT: ${{ secrets.MASTER_SSH_PORT }}
           SOURCE: docker-compose.yaml
-          TARGET: /home/${{ secrets.MASTER_SSH_USERNAME }}/deploy/
+          TARGET: /home/${{ secrets.MASTER_SSH_USERNAME }}/deploy/docker-compose.yaml
           SCRIPT_BEFORE: |
             rm -f /home/${{ secrets.MASTER_SSH_USERNAME }}/deploy/docker-compose.yaml
           SCRIPT_AFTER: |

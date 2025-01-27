@@ -19,9 +19,9 @@ services:
       - backend-network
     restart: always
 
-  nginx:
-    image: nginx:latest
-    container_name: nginx-container
+  breadkun-nginx:
+    image: breadkun-nginx:master
+    container_name: breadkun-nginx-master-container
     ports:
       - "80:80"
       - "443:443"
