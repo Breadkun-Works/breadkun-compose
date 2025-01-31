@@ -40,3 +40,13 @@
 1. `docker-compose.yaml` 파일을 서버로 전송합니다.
 2. 기존 `docker-compose.yaml`을 삭제하고 새로운 파일을 적용합니다.
 3. `docker-compose`를 재시작하여 새로운 설정을 반영합니다.
+
+---
+
+## Maintainer
+
+- **HONG**
+    - **Role**: Initial Developer & Current Maintainer
+    - **GitHub**: [coldair426](https://github.com/coldair426)
+    - **Blog**: [Velog](https://velog.io/@coldair426)
+    - **Mail**: coldair426@gmail.com
