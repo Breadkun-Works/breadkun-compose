@@ -15,6 +15,7 @@ services:
       - BREADKUN_DB_URL=${BREADKUN_DB_URL}
       - BREADKUN_DB_USERNAME=${BREADKUN_DB_USERNAME}
       - BREADKUN_DB_PASSWORD=${BREADKUN_DB_PASSWORD}
+      - BACKEND_CORS_ORIGINS=${BACKEND_CORS_ORIGINS}
     networks:
       - backend-network
     restart: always

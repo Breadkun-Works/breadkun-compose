@@ -23,6 +23,7 @@ jobs:
           echo "CORS_ORIGIN_1=${{ secrets.CORS_ORIGIN_1 }}" >> .env
           echo "CORS_ORIGIN_2=${{ secrets.CORS_ORIGIN_2 }}" >> .env
           echo "CORS_ORIGIN_3=${{ secrets.CORS_ORIGIN_3 }}" >> .env
+          echo "BACKEND_CORS_ORIGINS=${{ secrets.BACKEND_CORS_ORIGINS }}" >> .env
 
       - name: Deploy .env using ssh-deploy
         uses: easingthemes/ssh-deploy@v5.1.0
