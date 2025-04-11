@@ -35,6 +35,7 @@ services:
       - CORS_ORIGIN_2=${CORS_ORIGIN_2}
       - CORS_ORIGIN_3=${CORS_ORIGIN_3}
       - CORS_ORIGIN_4=${CORS_ORIGIN_4}
+      - CORS_ORIGIN_5=${CORS_ORIGIN_5}
       - CIABATTA_CORE_PORT=${CIABATTA_CORE_PORT}
     networks:
       - backend-network
