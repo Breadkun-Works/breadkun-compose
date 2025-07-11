@@ -16,6 +16,7 @@ services:
       - BREADKUN_DB_USERNAME=${BREADKUN_DB_USERNAME}
       - BREADKUN_DB_PASSWORD=${BREADKUN_DB_PASSWORD}
       - SSR_SECRET_KEY=${SSR_SECRET_KEY}
+      - BREADKUN_MONGO_DB_URL=${BREADKUN_MONGO_DB_URL}
     networks:
       - backend-network
     restart: always
