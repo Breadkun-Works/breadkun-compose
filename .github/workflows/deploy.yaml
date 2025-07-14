@@ -26,6 +26,7 @@ jobs:
           echo "CORS_ORIGIN_4=${{ secrets.CORS_ORIGIN_4 }}" >> .env
           echo "CORS_ORIGIN_5=${{ secrets.CORS_ORIGIN_5 }}" >> .env
           echo "SSR_SECRET_KEY=${{ secrets.SSR_SECRET_KEY }}" >> .env
+          echo "BREADKUN_MONGO_DB_URL=${{ secrets.BREADKUN_MONGO_DB_URL }}" >> .env
 
       - name: Deploy .env using ssh-deploy
         uses: easingthemes/ssh-deploy@v5.1.0
