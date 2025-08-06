@@ -11,7 +11,7 @@ services:
     # Spring 프로젝트는 실행 시점(Runtime)에 환경변수가 로드되며,
     # 빌드 된 파일(jar)에 포함되지 않기 때문에 한번 더 환경 변수가 주입되어야 함
     # docker-compose.yaml 파일은 .env 파일을 자동으로 로드함; export 따로 필요 하지 않음
-    # dev 서버가 없기 때문에, 프로필 등 master 설정을 인라인으로 함
+    # dev 서버가 없기 때문에, 프로필 등 master로 인라인 설정
     environment:
       - SPRING_PROFILES_ACTIVE=master
       - BREADKUN_DB_URL=${BREADKUN_DB_URL}
